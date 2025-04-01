@@ -1,0 +1,53 @@
+name: Build, Test & Publish
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build & Test
+        run: ./gradlew build --no-daemon
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: '**/build/test-results/test/'
+
+      - name: Report JUnit Results
+        if: always()
+        uses: dorny/test-reporter@v2
+        with:
+          name: Test Report
+          path: '**/build/test-results/test/TEST-*.xml'
+          reporter: java-junit
+
+      - name: Publish to GitHub Packages
+        if: github.ref == 'refs/heads/main'
+        run: ./gradlew publish --no-daemon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}

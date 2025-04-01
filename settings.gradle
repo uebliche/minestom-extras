@@ -1,0 +1,10 @@
+rootProject.name = 'minestom-extras'
+
+
+include('common')
+
+include('all')
+include('appleskin')
+include('viaversion')
+
+include('example')

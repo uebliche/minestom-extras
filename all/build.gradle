@@ -1,0 +1,8 @@
+//all/build.gradle
+afterEvaluate {
+    dependencies {
+        rootProject.subprojects.findAll { it != project && it.name != "example" }.each {
+            api project(it.path)
+        }
+    }
+}

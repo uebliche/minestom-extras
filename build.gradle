@@ -1,0 +1,93 @@
+// build.gradle
+
+def getGitHash() {
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short=10', 'HEAD'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch (Exception ignored) {
+        return "unknown"
+    }
+}
+
+allprojects {
+    group = "net.uebliche.minestom-extras"
+    version = getGitHash()
+}
+
+
+subprojects { p ->
+
+
+    apply {
+        plugin("java-library")
+        plugin("maven-publish")
+    }
+
+    if (project(":common") != p) {
+        dependencies {
+            api(project(":common"))
+            testImplementation project(path: ':common', configuration: 'testExport')
+        }
+
+        tasks.named('compileTestJava') {
+            dependsOn project(':common').tasks.named('compileTestJava')
+        }
+
+    }
+    if(project(":example") != p) {
+        publishing {
+            publications {
+
+                // Git-Hash-Version
+                gpr(MavenPublication) {
+                    from components.java
+                    artifactId = p.name
+                    version = project.version
+                }
+
+                // Latest-Version
+                latest(MavenPublication) {
+                    from components.java
+                    artifactId = p.name
+                    version = "latest"
+                }
+            }
+
+            repositories {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/uebliche/minestom-extras")
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR") ?: "USERNAME"
+                        password = System.getenv("GITHUB_TOKEN") ?: "TOKEN"
+                    }
+                }
+            }
+        }
+    }
+
+
+    dependencies {
+        implementation('net.minestom:minestom-snapshots:0366b58bfe')
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    }
+
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

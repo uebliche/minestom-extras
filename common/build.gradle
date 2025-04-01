@@ -1,0 +1,7 @@
+configurations {
+    testExport
+}
+
+artifacts {
+    testExport file("$buildDir/classes/java/test")
+}
