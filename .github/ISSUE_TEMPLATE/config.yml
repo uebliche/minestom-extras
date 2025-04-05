@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ❓ Ask a Question
+    url: https://github.com/uebliche/minestom-extras/discussions
+    about: Ask general questions or start a discussion here.

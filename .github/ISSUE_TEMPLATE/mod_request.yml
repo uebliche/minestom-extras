@@ -1,0 +1,40 @@
+name: 📦 Mod Support Request
+description: Request support or compatibility for a specific Minecraft mod.
+title: "[Mod Request] "
+labels: [enhancement, mod-support]
+body:
+  - type: input
+    id: mod_name
+    attributes:
+      label: Mod name
+      placeholder: e.g., "Sodium"
+    validations:
+      required: true
+  - type: input
+    id: mod_link
+    attributes:
+      label: Mod link
+      placeholder: e.g., "https://modrinth.com/mod/sodium"
+    validations:
+      required: false
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why should this mod be supported?
+      placeholder: |
+        Explain how this mod is relevant to the Minestom ecosystem
+        and why support for it would be valuable.
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected integration
+      placeholder: |
+        Describe what integration you'd like to see:
+        e.g., APIs exposed, event forwarding, compatibility fixes, etc.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: The mod is open source or allows external integration.
+        - label: I'm willing to help test or contribute to the integration.

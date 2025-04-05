@@ -1,0 +1,54 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior in the Minestom-Extras library.
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill out the information below to help us resolve the issue faster.
+  - type: input
+    id: minestom_version
+    attributes:
+      label: Minestom version used
+      description: Provide the Minestom commit hash or snapshot tag.
+      placeholder: e.g., "8209a1d1e9" or "1_21_5-8209a1d1e9"
+    validations:
+      required: true
+  - type: input
+    id: extras_version
+    attributes:
+      label: Minestom-Extras version used
+      description: Provide the exact version or commit hash used for Minestom-Extras.
+      placeholder: e.g., "8209a1d1e9" or "1_21_5-8209a1d1e9"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      placeholder: Describe the unexpected behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Setup or context
+      placeholder: |
+        Describe the scenario where the bug occurred.
+        Include relevant mods, environment details, or integration points if applicable.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or stacktrace
+      description: Paste any error messages or stacktrace here.
+      render: shell
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I am using the latest version of Minestom-Extras.
+          required: true
+        - label: I have checked existing issues and this has not been reported yet.
+          required: true
