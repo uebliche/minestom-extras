@@ -4,8 +4,7 @@ layout: home
 
 hero:
   name: "Minestom-Extras"
-  text: "A Banger Collection of Extras for Minestom"
-  tagline: My great project tagline
+  tagline: "A Collection of Extras for Minestom"
   actions:
     - theme: brand
       text: What are Minestom Extras?
@@ -25,10 +24,14 @@ features:
   - title: AppleSkin
     icon:
       src: ./images/mods/AppleSkin.png
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: Food-related HUD improvements for Minecraft
+  - title: ArmorPoser
+    icon:
+      src: ./images/mods/ArmorPoser.png
+    details: Adds a GUI for armor stands in which you can configure it's pose and other properties
   - title: ViaVersion
     icon:
       src: ./images/mods/ViaVersion.png
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: Allows the connection of newer clients to older server versions for Minecraft servers.
 ---
 
