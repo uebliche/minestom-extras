@@ -38,7 +38,7 @@ subprojects { p ->
         }
 
     }
-    if(project(":example") != p) {
+    if (project(":example") != p) {
         publishing {
             publications {
 
@@ -49,12 +49,6 @@ subprojects { p ->
                     version = project.version
                 }
 
-                // Latest-Version
-                latest(MavenPublication) {
-                    from components.java
-                    artifactId = p.name
-                    version = "latest"
-                }
             }
 
             repositories {
@@ -68,11 +62,16 @@ subprojects { p ->
                 }
             }
         }
+    } else {
+        dependencies {
+            implementation(project(":all"))
+            implementation("ch.qos.logback:logback-classic:1.5.18")
+        }
     }
 
 
     dependencies {
-        implementation('net.minestom:minestom-snapshots:0366b58bfe')
+        implementation(libs.minestom)
 
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
