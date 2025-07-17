@@ -5,6 +5,7 @@ include('common')
 
 include('all')
 include('appleskin')
+include('simplevoicechat')
 include('viaversion')
 
 include('example')

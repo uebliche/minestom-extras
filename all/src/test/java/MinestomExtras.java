@@ -1,4 +1,4 @@
-import net.uebliche.minestom.extras.appleskin.AppleSkinHelper;
+import net.uebliche.minestom.extras.appleskin.AppleSkinExtra;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -7,7 +7,7 @@ public class MinestomExtras extends ExtraRegistryTest {
 
     @Test
     void registerAll() {
-        registry.registerHelper(new AppleSkinHelper());
+        registry.registerHelper(new AppleSkinExtra());
     }
 
 }

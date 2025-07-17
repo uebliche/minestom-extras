@@ -7,6 +7,8 @@ import net.minestom.server.event.player.PlayerPluginMessageEvent;
 import net.minestom.server.network.NetworkBuffer;
 import net.minestom.server.network.packet.server.common.PluginMessagePacket;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -16,6 +18,8 @@ import java.util.Map;
  * This class is used to register and handle custom packets in the Minestom server.
  */
 public class ExtraRegistry {
+
+    Logger log = LoggerFactory.getLogger(ExtraRegistry.class);
 
     /**
      * This map is used to map classes to handlers.
@@ -38,6 +42,7 @@ public class ExtraRegistry {
      */
     protected final EventNode<Event> rootNode = EventNode.all("extra")
             .addListener(PlayerPluginMessageEvent.class, event -> {
+                log.info("Received plugin message: " + event.getIdentifier());
                 Player player = event.getPlayer();
                 String channel = event.getIdentifier();
                 byte[] data = event.getMessage();
@@ -57,7 +62,8 @@ public class ExtraRegistry {
     /**
      * Creates a new ExtraRegistry instance.
      */
-    public ExtraRegistry() {}
+    public ExtraRegistry() {
+    }
 
     /**
      * This method is used to write a packet to a PluginMessagePacket.
@@ -134,7 +140,7 @@ public class ExtraRegistry {
      * @return The serializer for the packet class.
      */
     @SuppressWarnings("unchecked")
-    private <T extends Packet> NetworkBuffer.Type<T> findSerializer(@NotNull Class<T> packetClass) {
+    private final <T extends Packet> NetworkBuffer.Type<T> findSerializer(@NotNull Class<T> packetClass) {
         try {
             Field field = packetClass.getField("SERIALIZER");
             return (NetworkBuffer.Type<T>) field.get(null);
@@ -146,7 +152,7 @@ public class ExtraRegistry {
     /**
      * This method is used to register a helper for the ExtraRegistry.
      */
-    private final Map<Class<?>, Helper> helpers = new HashMap<>();
+    private final Map<Class<?>, Extra> helpers = new HashMap<>();
 
     /**
      * This method is used to register a helper for the ExtraRegistry.
@@ -155,13 +161,16 @@ public class ExtraRegistry {
      * @param <T>    The type of the helper.
      */
     @SuppressWarnings("unchecked")
-    public <T extends Helper> void registerHelper(T helper) {
+    public final <T extends Extra> void registerHelper(T helper) {
         Class<?> helperClass = helper.getClass();
         if (helpers.containsKey(helperClass)) {
-            throw new IllegalArgumentException("Helper " + helperClass.getName() + " is already registered");
+            throw new IllegalArgumentException("Extra " + helperClass.getName() + " is already registered");
         }
         helpers.put(helperClass, helper);
         helper.registry = this;
+        helper.onRegister(this);
+        helper.registerPluginMessagesTypes(aClass -> types.put(aClass, findSerializer(aClass)));
+        helper.registerDefaultPacketListerners(this);
         if (helper.eventNode() != null) {
             this.eventNode().addChild(helper.eventNode());
         }
@@ -175,7 +184,7 @@ public class ExtraRegistry {
      * @return The helper for the ExtraRegistry.
      */
     @SuppressWarnings("unchecked")
-    public <T extends Helper> T getHelper(Class<T> helperClass) {
+    public final <T extends Extra> T getHelper(Class<T> helperClass) {
         return (T) helpers.get(helperClass);
     }
 
