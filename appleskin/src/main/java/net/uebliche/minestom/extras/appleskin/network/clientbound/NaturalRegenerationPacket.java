@@ -1,4 +1,4 @@
-package net.uebliche.minestom.extras.appleskin;
+package net.uebliche.minestom.extras.appleskin.network.clientbound;
 
 import net.uebliche.minstom.extras.common.Packet;
 import net.uebliche.minstom.extras.common.PacketInfo;
