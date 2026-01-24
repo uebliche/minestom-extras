@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "runMode": "library"
+  },
+  "group": "uebliche/libs",
+  "id": "libs/minestom-extras",
+  "kind": "project",
+  "loaderSource": "none",
+  "name": "Minestom Extras",
+  "runModes": [
+    "library"
+  ]
+}
