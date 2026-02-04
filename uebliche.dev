@@ -9,5 +9,25 @@
   "name": "Minestom Extras",
   "runModes": [
     "library"
+  ],
+  "actions": [
+    {
+      "label": "Run",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "docker compose -f compose.dev.yml up --build"
+      ],
+      "env": {
+        "HOST_PORT": "{HOST_PORT}"
+      }
+    }
+  ],
+  "vars": [
+    {
+      "key": "HOST_PORT",
+      "label": "Docker host port (0 = auto)",
+      "default": "0"
+    }
   ]
 }

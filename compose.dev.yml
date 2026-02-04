@@ -1,0 +1,25 @@
+name: minestom-extras-dev
+
+services:
+  minestom-extras:
+    image: uebliche/base-node20
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - node-modules:/workspace/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    command:
+      - bash
+      - -lc
+      - |
+        set -euo pipefail
+        if [ ! -d node_modules ]; then
+          npm install --no-audit --no-fund
+        fi
+        npm run dev -- --host 0.0.0.0 --port 8080
+    ports:
+      - "${HOST_PORT:-0}:8080"
+
+volumes:
+  node-modules:
