@@ -1,5 +1,5 @@
 [versions]
-jetbrainsAnnotations = "26.0.2"
+jetbrainsAnnotations = "26.1.0"
 logback-classic = "1.5.18"
 minestom = "2026.01.08-1.21.11"
 minimessage = "4.23.0"
