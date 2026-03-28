@@ -39,7 +39,7 @@ jobs:
 
       - name: Report JUnit Results
         if: always()
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@v3
         with:
           name: Test Report
           path: '**/build/test-results/test/TEST-*.xml'
