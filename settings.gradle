@@ -4,6 +4,7 @@ rootProject.name = 'minestom-extras'
 include('common')
 
 include('all')
+include('axiom')
 include('appleskin')
 include('simplevoicechat')
 include('viaversion')
