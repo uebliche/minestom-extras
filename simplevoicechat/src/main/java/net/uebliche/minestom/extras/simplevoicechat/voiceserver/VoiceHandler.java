@@ -111,7 +111,7 @@ public class VoiceHandler {
 
     private void onMicrophone(Player player, NetworkBuffer microphoneSVCPacket) {
         Optional.ofNullable(player.getTag(SimpleVoiceChatExtra.INSTANCE_TAG)).ifPresent(extra -> {
-            player.getTag(extra.PUFFER_TAG).push(packetClass, buffer);
+            player.getTag(extra.PUFFER_TAG).push(new MicrophoneSVCPacket().read(microphoneSVCPacket));
         });
     }
 

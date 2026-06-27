@@ -15,7 +15,7 @@ public final class VoiceState {
             NetworkBuffer.BOOLEAN, VoiceState::disconnected,
             NetworkBuffer.UUID, VoiceState::uuid,
             NetworkBuffer.STRING, VoiceState::name,
-            NetworkBuffer.OPT_UUID, VoiceState::group,
+            NetworkBuffer.UUID.optional(), VoiceState::group,
             VoiceState::new
     );
 
