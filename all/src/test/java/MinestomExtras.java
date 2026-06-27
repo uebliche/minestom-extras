@@ -1,4 +1,5 @@
 import net.uebliche.minestom.extras.appleskin.AppleSkinExtra;
+import net.uebliche.minestom.extras.axiom.AxiomExtra;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -7,6 +8,7 @@ public class MinestomExtras extends ExtraRegistryTest {
 
     @Test
     void registerAll() {
+        registry.registerHelper(new AxiomExtra());
         registry.registerHelper(new AppleSkinExtra());
     }
 
