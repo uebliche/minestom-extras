@@ -1,7 +1,7 @@
 [versions]
 jetbrainsAnnotations = "26.0.2"
 logback-classic = "1.5.18"
-minestom = "2026.01.08-1.21.11"
+minestom = "2026.07.12-26.2"
 minimessage = "4.23.0"
 slf4j-api = "2.0.17"
 

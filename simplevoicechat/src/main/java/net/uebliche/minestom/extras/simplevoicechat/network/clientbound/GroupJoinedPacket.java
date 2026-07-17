@@ -15,7 +15,7 @@ public record GroupJoinedPacket(
 ) implements Packet {
 
     public static final @NotNull NetworkBuffer.Type<GroupJoinedPacket> SERIALIZER = NetworkBufferTemplate.template(
-            NetworkBuffer.OPT_UUID, GroupJoinedPacket::group,
+            NetworkBuffer.UUID.optional(), GroupJoinedPacket::group,
             NetworkBuffer.BOOLEAN, GroupJoinedPacket::incorrectPassword,
             GroupJoinedPacket::new
     );
