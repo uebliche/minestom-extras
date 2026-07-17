@@ -1,16 +1,23 @@
 // build.gradle
 
 def getGitHash() {
+    def githubSha = System.getenv("GITHUB_SHA")
+    if (githubSha != null && githubSha.length() >= 10) {
+        return githubSha.substring(0, 10)
+    }
     try {
         def stdout = new ByteArrayOutputStream()
         exec {
             commandLine 'git', 'rev-parse', '--short=10', 'HEAD'
             standardOutput = stdout
         }
-        return stdout.toString().trim()
+        def hash = stdout.toString().trim()
+        if (!hash.isEmpty()) {
+            return hash
+        }
     } catch (Exception ignored) {
-        return "unknown"
     }
+    return "local-SNAPSHOT"
 }
 
 allprojects {
@@ -74,9 +81,9 @@ subprojects { p ->
         implementation(libs.minestom)
         implementation(libs.slf4j.api)
 
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.3'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.3'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.0.3'
     }
 
     java {
@@ -90,5 +97,6 @@ subprojects { p ->
 
     test {
         useJUnitPlatform()
+        failOnNoDiscoveredTests = false
     }
 }
